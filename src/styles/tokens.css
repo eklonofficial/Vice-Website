@@ -1,0 +1,47 @@
+:root {
+  /* Surfaces */
+  --bg: #05070d;
+  --bg-raised: #0a0f1c;
+  --bg-card: #090e1a;
+  --navy-800: #0f1a2e;
+  --navy-900: #080d1a;
+
+  /* Brand blues (from vice.svg) */
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --red: #f43f5e;
+  --green: #4ade80;
+
+  /* Text */
+  --text: #e8ecf4;
+  --text-dim: rgba(232, 236, 244, 0.62);
+  --text-faint: rgba(232, 236, 244, 0.38);
+
+  /* Lines */
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.13);
+
+  /* Type */
+  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  /* Layout */
+  --container: 1160px;
+  --gutter: clamp(20px, 5vw, 48px);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --space-section: clamp(72px, 10vh, 124px);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Effects */
+  --glow-blue: 0 0 40px rgba(59, 130, 246, 0.35);
+  --shadow-frame:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 24px 80px -16px rgba(37, 99, 235, 0.22),
+    0 8px 32px rgba(0, 0, 0, 0.5);
+}

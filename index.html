@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vice · Instant replay for Linux</title>
+    <meta
+      name="description"
+      content="Press one key to save the last 15 seconds of gameplay. Vice is open-source instant-replay game clipping for Linux. No scenes, no setup, no upload."
+    />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="icon" type="image/svg+xml" href="./vice.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Vice · Instant replay for Linux" />
+    <meta
+      property="og:description"
+      content="Press one key to save the last 15 seconds of gameplay. No scenes, no setup, no upload."
+    />
+    <meta property="og:url" content="https://eklonofficial.github.io/Vice-Website/" />
+    <meta property="og:image" content="https://eklonofficial.github.io/Vice-Website/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="grain" aria-hidden="true"></div>
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="lg-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#60a5fa" />
+          <stop offset="1" stop-color="#2563eb" />
+        </linearGradient>
+        <linearGradient id="lg-dot" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#93c5fd" />
+          <stop offset="1" stop-color="#1d4ed8" />
+        </linearGradient>
+        <symbol id="mark" viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="16.5" fill="none" stroke="url(#lg-ring)" stroke-width="4.5" />
+          <circle cx="24" cy="24" r="9" fill="url(#lg-dot)" />
+          <circle cx="24" cy="24" r="3.4" fill="#0d0d1a" />
+          <circle cx="27.8" cy="20.4" r="2" fill="#f43f5e" />
+        </symbol>
+        <symbol id="i-github" viewBox="0 0 16 16">
+          <path
+            fill="currentColor"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+          />
+        </symbol>
+        <symbol id="i-copy" viewBox="0 0 16 16">
+          <rect
+            x="5.5"
+            y="5.5"
+            width="8"
+            height="8"
+            rx="1.8"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+          />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            d="M10.5 3.5v-.2A1.8 1.8 0 0 0 8.7 1.5H3.3A1.8 1.8 0 0 0 1.5 3.3v5.4a1.8 1.8 0 0 0 1.8 1.8h.2"
+          />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 16 16">
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m3 8.5 3.2 3.2L13 4.5"
+          />
+        </symbol>
+        <symbol id="i-check-circle" viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="8.4" fill="none" stroke="currentColor" stroke-width="1.5" />
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m6.6 10.4 2.3 2.3 4.5-5"
+          />
+        </symbol>
+        <symbol id="i-play" viewBox="0 0 16 16">
+          <path fill="currentColor" d="M4.5 2.8v10.4c0 .8.9 1.3 1.6.9l8-5.2c.6-.4.6-1.4 0-1.8l-8-5.2c-.7-.4-1.6.1-1.6.9z" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <header class="nav" id="nav">
+      <nav class="nav-pill" aria-label="Main">
+        <a class="nav-brand" href="#top">
+          <svg aria-hidden="true"><use href="#mark" /></svg>
+          Vice
+        </a>
+        <div class="nav-links">
+          <a href="#how">How it works</a>
+          <a href="#features">Features</a>
+          <a href="#compare">Compare</a>
+        </div>
+        <a
+          class="nav-gh"
+          href="https://github.com/eklonofficial/Vice"
+          target="_blank"
+          rel="noopener"
+          aria-label="Vice on GitHub"
+        >
+          <svg aria-hidden="true"><use href="#i-github" /></svg>
+        </a>
+        <a class="btn btn-primary btn-small" href="#get">Install</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- ============ Hero: pitch + install, everything above the fold ============ -->
+      <section class="hero" id="top">
+        <div class="hero-glow" aria-hidden="true"></div>
+
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow" data-hero="1">Open source · Linux native</p>
+            <h1 class="display" data-hero="2">Instant replay for&nbsp;Linux.</h1>
+            <p class="lede" data-hero="3">
+              Press one key to save the last 15 seconds of gameplay. No scenes, no setup, no
+              upload.
+            </p>
+            <ul class="hero-points" data-hero="4">
+              <li><svg aria-hidden="true"><use href="#i-check" /></svg>Under 1% CPU while recording</li>
+              <li><svg aria-hidden="true"><use href="#i-check" /></svg>Works on every compositor and GPU</li>
+              <li><svg aria-hidden="true"><use href="#i-check" /></svg>Free forever, no account</li>
+            </ul>
+            <div class="hero-ctas" data-hero="5">
+              <a class="btn btn-ghost" href="https://github.com/eklonofficial/Vice" target="_blank" rel="noopener">
+                <svg aria-hidden="true"><use href="#i-github" /></svg>
+                View on GitHub
+              </a>
+              <div class="hero-key">
+                <kbd class="keycap">F9</kbd>
+                <span>That is the whole workflow.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-install" id="get" data-hero="6">
+            <h2 class="h3">Install in one line</h2>
+            <p class="field-label">Arch · Manjaro · CachyOS · EndeavourOS</p>
+            <button class="cmd" data-copy="yay -S vice-clipper" type="button" aria-label="Copy: yay -S vice-clipper">
+              <code><span class="dim">$ </span>yay -S vice-clipper</code>
+              <span class="cmd-copy" aria-hidden="true">
+                <svg class="icon-copy"><use href="#i-copy" /></svg>
+                <svg class="icon-check"><use href="#i-check" /></svg>
+              </span>
+            </button>
+            <p class="field-label">Ubuntu · Debian · Mint · Fedora · openSUSE</p>
+            <button
+              class="cmd"
+              data-copy="git clone https://github.com/eklonofficial/Vice &amp;&amp; cd Vice &amp;&amp; ./install.sh"
+              type="button"
+              aria-label="Copy the git clone install command"
+            >
+              <code><span class="dim">$ </span>git clone https://github.com/eklonofficial/Vice<br />&nbsp;&nbsp;&amp;&amp; cd Vice &amp;&amp; ./install.sh</code>
+              <span class="cmd-copy" aria-hidden="true">
+                <svg class="icon-copy"><use href="#i-copy" /></svg>
+                <svg class="icon-check"><use href="#i-check" /></svg>
+              </span>
+            </button>
+            <p class="small-note">
+              Installs the capture backend and starts clipping at login. Then press F9 in a game.
+              That is it.
+            </p>
+          </div>
+        </div>
+
+        <div class="container hero-shot" data-hero="7">
+          <div class="frame">
+            <picture>
+              <source srcset="./src/assets/shots/trim.avif" type="image/avif" />
+              <img
+                src="./src/assets/shots/trim.webp"
+                alt="The Vice trim view: a Rocket League clip with draggable in and out handles"
+                width="1040"
+                height="800"
+                fetchpriority="high"
+              />
+            </picture>
+          </div>
+        </div>
+        <span class="sr-only" aria-live="polite" data-copy-status></span>
+      </section>
+
+      <!-- ============ How it works: three steps, one glance ============ -->
+      <section class="section-pad" id="how" aria-label="How Vice works">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">How it works</p>
+            <h2 class="h2">From play to clip in one tap.</h2>
+          </div>
+
+          <div class="steps">
+            <div class="step" data-reveal>
+              <div class="step-visual">
+                <canvas id="buffer-canvas" aria-hidden="true"></canvas>
+              </div>
+              <h3>Always rolling</h3>
+              <p>
+                A two minute buffer runs silently at the driver level. Nothing touches your disk
+                until you ask.
+              </p>
+            </div>
+            <div class="step" data-reveal>
+              <div class="step-visual">
+                <kbd class="keycap keycap-lg" id="how-keycap">F9</kbd>
+              </div>
+              <h3>Press F9</h3>
+              <p>
+                The play happens, you tap one key. No alt-tab, no focus stealing, in any game on
+                any compositor.
+              </p>
+            </div>
+            <div class="step" data-reveal>
+              <div class="step-visual">
+                <div class="toast">
+                  <svg aria-hidden="true"><use href="#i-check-circle" /></svg>
+                  New clip saved!
+                </div>
+              </div>
+              <h3>Already saved</h3>
+              <p>
+                The last 15 seconds land in your gallery before the round ends. Game-tagged and
+                ready to share.
+              </p>
+            </div>
+          </div>
+
+          <div class="stats" data-reveal>
+            <div class="stat">
+              <b><span class="dimlt">&lt;</span><span data-count="1">1</span><sub>%</sub></b>
+              <span>CPU while recording</span>
+            </div>
+            <div class="stat">
+              <b><span data-count="60">60</span><sub>fps</sub></b>
+              <span>Capture, up to 4K</span>
+            </div>
+            <div class="stat">
+              <b><span data-count="0">0</span><sub>scenes</sub></b>
+              <span>To configure. Ever.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Features ============ -->
+      <section class="section-pad" id="features" aria-label="Features">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Features</p>
+            <h2 class="h2">Small app. Sharp details.</h2>
+          </div>
+
+          <div class="bento">
+            <div class="bento-card" data-reveal>
+              <h3>Sessions and highlights</h3>
+              <p>
+                Double-tap F9 to record a whole match. Tap once mid-game to drop a color-coded
+                marker on the timeline.
+              </p>
+              <div class="bento-media">
+                <div class="mini-timeline" aria-hidden="true">
+                  <i class="mt-track"></i><i class="mt-fill"></i>
+                  <em style="left: 18%; --c: #fb923c"></em>
+                  <em style="left: 47%; --c: #60a5fa"></em>
+                  <em style="left: 78%; --c: #f43f5e"></em>
+                </div>
+              </div>
+            </div>
+
+            <div class="bento-card" data-reveal>
+              <h3>Share links that just work</h3>
+              <p>
+                Every clip gets a public Cloudflare Tunnel URL. Paste it in Discord, it plays
+                inline. No upload, no account.
+              </p>
+              <div class="bento-media">
+                <div class="shot">
+                  <picture>
+                    <source srcset="./src/assets/shots/embed-thumb.avif" type="image/avif" />
+                    <img
+                      src="./src/assets/shots/embed-thumb.webp"
+                      alt="A Rocket League clip embedded in Discord"
+                      width="784"
+                      height="336"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+              </div>
+            </div>
+
+            <div class="bento-card" data-reveal>
+              <h3>Game-tagged filenames</h3>
+              <p>A curated game list names your clips. Nothing is guessed from window titles.</p>
+              <div class="bento-media">
+                <div class="filename" id="filename-demo">
+                  <span class="dim">~/Videos/Vice/</span><span id="filename-typed">Vice_Clip_4_Overwatch-2.mp4</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bento-card" data-reveal>
+              <h3>Separate audio tracks</h3>
+              <p>Game, voice chat, and microphone each on their own track for the edit.</p>
+              <div class="bento-media">
+                <div class="tracks" aria-hidden="true">
+                  <div class="track"><span>Game</span><i style="--fill: 86%"></i></div>
+                  <div class="track"><span>Voice</span><i style="--fill: 58%"></i></div>
+                  <div class="track"><span>Mic</span><i style="--fill: 34%"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bento-card" data-reveal>
+              <h3>A real CLI</h3>
+              <p>The daemon answers to the terminal too. Script it, bind it, systemd it.</p>
+              <div class="bento-media">
+                <div class="term">
+                  <div class="term-body">
+                    <div><span class="ps1">$</span> vice clip</div>
+                    <div class="out">Saved Vice_Clip_41_Overwatch-2.mp4</div>
+                    <div><span class="ps1">$</span> <span class="caret" aria-hidden="true"></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bento-card" data-reveal>
+              <h3>Discord Rich Presence</h3>
+              <p>
+                Shows "Clipping &lt;Game&gt; with Vice" while a recognized game is focused. Off in
+                one toggle.
+              </p>
+              <div class="bento-media">
+                <div class="shot">
+                  <picture>
+                    <source srcset="./src/assets/shots/settings-discord.avif" type="image/avif" />
+                    <img
+                      src="./src/assets/shots/settings-discord.webp"
+                      alt="The Discord Rich Presence toggle in Vice settings"
+                      width="730"
+                      height="152"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="compat" data-reveal>
+            <div class="compat-copy">
+              <h3 class="h3">Works everywhere you do.</h3>
+              <p class="small-note">
+                Hotkeys are read from /dev/input via evdev, so the clip key works on every
+                compositor with no keybind config.
+              </p>
+            </div>
+            <div class="chip-row">
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>Hyprland</span>
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>GNOME</span>
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>KDE Plasma</span>
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>sway</span>
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>Any X11 WM</span>
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>NVIDIA NVENC</span>
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>AMD &amp; Intel VAAPI</span>
+              <span class="chip"><svg aria-hidden="true"><use href="#i-check" /></svg>x264 fallback</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Inside the app ============ -->
+      <section class="section-pad" id="app" aria-label="Inside the app">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Inside the app</p>
+            <h2 class="h2">A gallery that feels familiar.</h2>
+            <p class="lede">
+              Hover previews, in-place rename, share, and visual trim with lossless cut bounds.
+            </p>
+          </div>
+
+          <div class="shots-grid">
+            <figure class="shot-card is-wide" data-reveal>
+              <div class="frame">
+                <picture>
+                  <source srcset="./src/assets/shots/dashboard.avif" type="image/avif" />
+                  <img
+                    src="./src/assets/shots/dashboard.webp"
+                    alt="The Vice dashboard with a live rolling buffer, clip stats, and recent clips"
+                    width="1600"
+                    height="1271"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <figcaption><b>Home</b><span>Buffer status, stats, recent clips.</span></figcaption>
+            </figure>
+            <figure class="shot-card" data-reveal>
+              <div class="frame">
+                <picture>
+                  <source srcset="./src/assets/shots/gallery.avif" type="image/avif" />
+                  <img
+                    src="./src/assets/shots/gallery.webp"
+                    alt="The Vice clip gallery, a grid of game clips with play, trim, rename, share, and delete actions"
+                    width="1600"
+                    height="1271"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <figcaption><b>Gallery</b><span>Every clip, one grid.</span></figcaption>
+            </figure>
+            <figure class="shot-card" data-reveal>
+              <div class="frame">
+                <picture>
+                  <source srcset="./src/assets/shots/session-viewer.avif" type="image/avif" />
+                  <img
+                    src="./src/assets/shots/session-viewer.webp"
+                    alt="A session recording open in the Vice viewer with highlight markers on the timeline"
+                    width="1600"
+                    height="1271"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <figcaption><b>Sessions</b><span>Every marker on the timeline.</span></figcaption>
+            </figure>
+            <figure class="shot-card" data-reveal>
+              <div class="frame">
+                <picture>
+                  <source srcset="./src/assets/shots/viewer.avif" type="image/avif" />
+                  <img
+                    src="./src/assets/shots/viewer.webp"
+                    alt="The Vice clip viewer with playback controls and highlight list"
+                    width="1020"
+                    height="860"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <figcaption><b>Viewer</b><span>Scrub, mark, replay.</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Compare ============ -->
+      <section class="section-pad" id="compare" aria-label="Vice compared to OBS">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Compare</p>
+            <h2 class="h2">OBS has a replay buffer. This is different.</h2>
+            <p class="lede">OBS is a studio. Vice is a reflex.</p>
+          </div>
+
+          <div class="compare" data-reveal>
+            <div class="c-head"></div>
+            <div class="c-head">OBS Replay Buffer</div>
+            <div class="c-head c-vice">Vice</div>
+
+            <div class="c-label">Setup</div>
+            <div class="c-obs">Launch OBS, build a scene, enable the buffer, bind a hotkey</div>
+            <div class="c-vice">Install, press F9</div>
+
+            <div class="c-label">Always on</div>
+            <div class="c-obs">OBS must stay open with a scene active</div>
+            <div class="c-vice">Silent daemon, always watching</div>
+
+            <div class="c-label">GPU overhead</div>
+            <div class="c-obs">Encodes a composed scene continuously</div>
+            <div class="c-vice">Captures the framebuffer directly. Near zero.</div>
+
+            <div class="c-label">Global hotkey</div>
+            <div class="c-obs">Needs focus, or a plugin</div>
+            <div class="c-vice">Reads evdev. Works on every compositor.</div>
+
+            <div class="c-label">Sharing</div>
+            <div class="c-obs">Manual upload somewhere</div>
+            <div class="c-vice">Public URL, Discord auto-embed</div>
+
+            <div class="c-label">Clip management</div>
+            <div class="c-obs">None</div>
+            <div class="c-vice">Gallery, viewer, trim, highlights, rename</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Share, up close ============ -->
+      <section class="section-pad" aria-label="Sharing clips">
+        <div class="container share-grid">
+          <div class="share-copy" data-reveal>
+            <p class="eyebrow">Sharing</p>
+            <h2 class="h2">From clip to chat in one paste.</h2>
+            <p class="lede">
+              Every clip gets a public link through a Cloudflare Tunnel. Paste it in Discord and
+              it plays inline, tinted with your theme color.
+            </p>
+            <ul class="share-points">
+              <li>No upload queue. The link points straight at your machine.</li>
+              <li>No account, no watermark, no compression pass.</li>
+              <li>Embeds play inline for everyone in the channel.</li>
+            </ul>
+          </div>
+
+          <div class="discord" data-reveal id="discord-mock">
+            <div class="discord-msg">
+              <div class="discord-avatar" aria-hidden="true">
+                <svg><use href="#mark" /></svg>
+              </div>
+              <div>
+                <div class="discord-head">
+                  <span class="discord-name">eklon</span>
+                  <span class="discord-time">Today at 11:47 PM</span>
+                </div>
+                <span class="discord-link">https://goal-zero-buffer.trycloudflare.com/clip/12</span>
+                <div class="discord-embed">
+                  <div class="discord-embed-title">Vice_Clip_12_Rocket-League.mp4</div>
+                  <div class="discord-video">
+                    <picture>
+                      <source srcset="./src/assets/shots/embed-thumb.avif" type="image/avif" />
+                      <img
+                        src="./src/assets/shots/embed-thumb.webp"
+                        alt="A Rocket League goal replay embedded in a Discord message"
+                        width="784"
+                        height="336"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                    <div class="discord-play" aria-hidden="true">
+                      <i><svg><use href="#i-play" /></svg></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Final CTA ============ -->
+      <section class="section-pad cta-strip" aria-label="Get Vice">
+        <div class="container cta-row" data-reveal>
+          <div>
+            <h2 class="h2">Press F9. Keep the moment.</h2>
+            <p class="lede">GPL-3.0 · Free forever · No account</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="#get">Install Vice</a>
+            <a class="btn btn-ghost" href="https://github.com/eklonofficial/Vice" target="_blank" rel="noopener">
+              <svg aria-hidden="true"><use href="#i-github" /></svg>
+              Star on GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ Footer ============ -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <svg aria-hidden="true"><use href="#mark" /></svg>
+          Vice
+        </div>
+        <div class="footer-meta">
+          <span>Built for Linux gamers. Created by Andrew Marin.</span>
+          <a href="https://github.com/eklonofficial/Vice" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/eklonofficial/Vice/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

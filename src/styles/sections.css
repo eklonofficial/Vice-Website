@@ -1,0 +1,435 @@
+/* Default styles are the static, no-JS layout: everything visible. Motion
+   only adds entrance reveals (initial states keyed off .js-motion). */
+
+section {
+  position: relative;
+}
+
+.section-pad {
+  padding-block: var(--space-section);
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: clamp(32px, 4.5vw, 52px);
+  max-width: 680px;
+}
+
+/* ===== Hero ===== */
+
+.hero {
+  position: relative;
+  overflow: clip;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-glow {
+  position: absolute;
+  z-index: 0;
+  top: -30%;
+  right: -12%;
+  width: min(60vw, 760px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.14), transparent 62%);
+  pointer-events: none;
+}
+
+.hero-shot {
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(56px, 9vh, 100px);
+}
+
+.hero-shot .frame {
+  max-width: 880px;
+  margin-inline: auto;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(36px, 6vw, 88px);
+  align-items: center;
+  padding-top: clamp(120px, 16vh, 170px);
+  padding-bottom: clamp(48px, 7vh, 84px);
+}
+
+.hero-copy .display {
+  margin-top: 20px;
+  max-width: 12ch;
+}
+
+.hero-copy .lede {
+  margin-top: 20px;
+  max-width: 44ch;
+}
+
+.hero-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.hero-points li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text-dim);
+}
+
+.hero-points svg {
+  width: 14px;
+  height: 14px;
+  color: var(--blue-400);
+  flex: none;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 26px;
+  margin-top: 34px;
+}
+
+.hero-key {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-faint);
+  font-size: 14.5px;
+}
+
+.hero-key .keycap {
+  min-width: 44px;
+  height: 44px;
+  font-size: 15px;
+}
+
+/* The install card: the page's primary action, above the fold */
+
+.hero-install {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 26px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  box-shadow: 0 0 70px -30px rgba(37, 99, 235, 0.5);
+}
+
+.hero-install .h3 {
+  margin-bottom: 6px;
+}
+
+.field-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+
+.hero-install .small-note {
+  margin-top: 10px;
+}
+
+@media (max-width: 920px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    padding-top: 110px;
+  }
+}
+
+/* ===== How it works ===== */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.step {
+  padding: 24px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.008));
+  border: 1px solid var(--line);
+}
+
+.step-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 104px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  background: #060a14;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+#buffer-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.step h3 {
+  font-size: 17px;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+}
+
+.step p {
+  margin-top: 7px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.steps + .stats {
+  margin-top: clamp(36px, 5vw, 56px);
+}
+
+@media (max-width: 880px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Features extras ===== */
+
+.compat {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  margin-top: 18px;
+  padding: 26px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.006));
+}
+
+.compat .small-note {
+  margin-top: 8px;
+  max-width: 46ch;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 880px) {
+  .compat {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Inside the app ===== */
+
+.shots-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 2.5vw, 28px);
+  align-items: start;
+}
+
+.shot-card.is-wide {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 880px;
+}
+
+.shot-card figcaption {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.shot-card figcaption b {
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--blue-300);
+}
+
+.shot-card figcaption span {
+  font-size: 13.5px;
+  color: var(--text-faint);
+}
+
+@media (max-width: 760px) {
+  .shots-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Share ===== */
+
+.share-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(36px, 6vw, 80px);
+  align-items: center;
+}
+
+.share-copy .h2 {
+  margin-top: 16px;
+}
+
+.share-copy .lede {
+  margin-top: 16px;
+}
+
+.share-points {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.share-points li {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+.share-points li::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue-500);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 880px) {
+  .share-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Filename demo (features) ===== */
+
+.filename {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--blue-300);
+  background: #060a14;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0 14px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.filename .dim {
+  color: var(--text-faint);
+}
+
+/* ===== Final CTA ===== */
+
+.cta-strip {
+  border-top: 1px solid var(--line);
+}
+
+.cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.cta-row .lede {
+  margin-top: 12px;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ===== Footer ===== */
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding-block: 44px;
+}
+
+.footer-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 650;
+}
+
+.footer-brand svg {
+  width: 22px;
+  height: 22px;
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 14px;
+  color: var(--text-faint);
+}
+
+.footer-meta a:hover {
+  color: var(--text);
+}
+
+/* ===== Reveal initial states (motion mode only) ===== */
+
+.js-motion [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+/* ===== Stacked panel transitions =====
+   Each section sticks once fully scrolled and the next panel slides over
+   it while it sinks back. JS sets each panel's sticky `top` and adds the
+   class; without JS (or with reduced motion) the page scrolls normally. */
+
+.js-stack main > section,
+.js-stack .footer {
+  position: sticky;
+  background: var(--bg);
+}
+
+.js-stack main > section:not(:first-child),
+.js-stack .footer {
+  border-radius: 26px 26px 0 0;
+  border-top: 1px solid var(--line-strong);
+  box-shadow: 0 -28px 80px rgba(0, 0, 0, 0.55);
+}
+
+.js-stack .hero {
+  border-bottom: none;
+}
