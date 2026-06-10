@@ -3,23 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vice · Instant replay for Linux</title>
+    <title>Vice · Instant Replay and Game Clipping for Linux</title>
     <meta
       name="description"
-      content="Press one key to save the last 15 seconds of gameplay. Vice is open-source instant-replay game clipping for Linux. No scenes, no setup, no upload."
+      content="Free, open-source instant replay for Linux gaming. Press one key to clip the last 15 seconds of gameplay and share it to Discord instantly. Works on Hyprland, GNOME, KDE, sway, and X11."
     />
+    <meta
+      name="keywords"
+      content="linux game clipper, instant replay linux, game clipping linux, shadowplay alternative linux, medal.tv alternative linux, clip software linux, wayland game recording, gpu screen recorder, hyprland clip tool, linux gaming clips, discord clip sharing"
+    />
+    <meta name="author" content="Andrew Marin" />
     <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href="https://eklonofficial.github.io/Vice-Website/" />
     <link rel="icon" type="image/svg+xml" href="./vice.svg" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Vice · Instant replay for Linux" />
+    <meta property="og:site_name" content="Vice" />
+    <meta property="og:title" content="Vice · Instant Replay for Linux" />
     <meta
       property="og:description"
-      content="Press one key to save the last 15 seconds of gameplay. No scenes, no setup, no upload."
+      content="Press one key to save the last 15 seconds of gameplay and share it to Discord instantly. Free, open source, Linux native."
     />
     <meta property="og:url" content="https://eklonofficial.github.io/Vice-Website/" />
     <meta property="og:image" content="https://eklonofficial.github.io/Vice-Website/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Vice logo, a glowing blue record button" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vice · Instant Replay for Linux" />
+    <meta
+      name="twitter:description"
+      content="Press one key to save the last 15 seconds of gameplay and share it to Discord instantly. Free, open source, Linux native."
+    />
+    <meta name="twitter:image" content="https://eklonofficial.github.io/Vice-Website/og.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Vice",
+        "alternateName": ["Vice Clipper", "Vice Game Clipper"],
+        "description": "Open-source instant replay and game clipping for Linux. A rolling buffer records gameplay at the driver level; press one key to save the last 15 seconds, then share the clip to Discord through an instant public link. No scenes, no setup, no upload.",
+        "url": "https://eklonofficial.github.io/Vice-Website/",
+        "downloadUrl": "https://github.com/eklonofficial/Vice",
+        "softwareHelp": "https://github.com/eklonofficial/Vice#readme",
+        "operatingSystem": "Linux",
+        "applicationCategory": "MultimediaApplication",
+        "applicationSubCategory": "Screen Recorder",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+        "image": "https://eklonofficial.github.io/Vice-Website/og.png",
+        "screenshot": "https://eklonofficial.github.io/Vice-Website/og.png",
+        "author": {
+          "@type": "Person",
+          "name": "Andrew Marin",
+          "url": "https://github.com/eklonofficial"
+        },
+        "keywords": "instant replay, game clipping, Linux gaming, ShadowPlay alternative, Medal.tv alternative, Wayland, Hyprland, GNOME, KDE, NVENC, VAAPI, Discord clips",
+        "featureList": [
+          "Rolling instant-replay buffer with one-key clipping",
+          "Session recording with color-coded highlight markers",
+          "Instant public share links with Discord inline embeds",
+          "Clip gallery with lossless trim, rename, and hover previews",
+          "Driver-level capture via gpu-screen-recorder (NVENC, VAAPI, x264)",
+          "Global hotkeys on every compositor via evdev",
+          "Separate audio tracks for game, voice chat, and microphone",
+          "Discord Rich Presence and game-tagged filenames"
+        ]
+      }
+    </script>
 
     <script type="module" src="/src/main.ts"></script>
   </head>
