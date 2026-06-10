@@ -1,55 +1,65 @@
 import gsap from 'gsap';
 
-/** Quick reveals, count-ups, one typing effect, and the stacked-panel scroll. */
+/** Quick reveals, the hero showcase flatten, ambient glow drift, count-ups. */
 export function initSections(): void {
   initHero();
-  initStackMorph();
+  initHeroShowcase();
+  initAmbient();
   initReveals();
   initCounts();
   initFilenameTyping();
 }
 
 /**
- * The signature scroll: each section sticks once it has fully scrolled and
- * the next panel slides over it while the covered one sinks back and dims.
- * Pure sticky positioning plus one scrubbed tween per seam, so any section
- * height works and the page remains plain scrolling underneath.
+ * The hero screenshot leans back in perspective and flattens to face-on as
+ * it scrolls toward center. Transform-only; without JS it renders flat.
  */
-function initStackMorph(): void {
-  if (window.innerWidth < 880 || window.innerHeight < 560) return;
+function initHeroShowcase(): void {
+  const frame = document.querySelector<HTMLElement>('.hero-shot .frame');
+  if (!frame) return;
 
-  const panels = gsap.utils.toArray<HTMLElement>('main > section, .footer');
-  if (panels.length < 2) return;
-
-  document.documentElement.classList.add('js-stack');
-
-  const setTops = () => {
-    panels.forEach((panel) => {
-      panel.style.top = `${Math.min(0, innerHeight - panel.offsetHeight)}px`;
-    });
-  };
-  setTops();
-  window.addEventListener('resize', setTops);
-
-  panels.forEach((panel, i) => {
-    if (i === 0) return;
-    const prev = panels[i - 1];
-    const targets = Array.from(prev.children).filter(
-      (el) => !el.classList.contains('sr-only'),
-    );
-    gsap.to(targets, {
-      scale: 0.95,
-      opacity: 0.35,
-      transformOrigin: 'center 30%',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: panel,
-        start: 'top bottom',
-        end: 'top top',
-        scrub: true,
-      },
-    });
+  gsap.set(frame, {
+    rotateX: 16,
+    scale: 0.96,
+    transformPerspective: 1100,
+    transformOrigin: 'center top',
   });
+
+  gsap.to(frame, {
+    rotateX: 0,
+    scale: 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero-shot',
+      start: 'top 85%',
+      end: 'top 30%',
+      scrub: 0.5,
+    },
+  });
+}
+
+/**
+ * Ambient glow drift: two fixed background blobs slowly travel as the page
+ * scrolls, so the lighting mood shifts from section to section.
+ */
+function initAmbient(): void {
+  const a = document.querySelector<HTMLElement>('.ambient .blob-a');
+  const b = document.querySelector<HTMLElement>('.ambient .blob-b');
+  if (!a || !b) return;
+
+  const tl = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: { trigger: 'main', start: 'top top', end: 'bottom bottom', scrub: 1 },
+  });
+
+  // Waypoints in viewport-relative percents; transform and opacity only
+  tl.to(a, { xPercent: -55, yPercent: 35, opacity: 0.7, duration: 1 }, 0)
+    .to(a, { xPercent: 10, yPercent: 60, opacity: 0.5, duration: 1 }, 1)
+    .to(a, { xPercent: -25, yPercent: 30, opacity: 0.65, duration: 1 }, 2);
+
+  tl.to(b, { xPercent: 50, yPercent: -40, opacity: 0.5, duration: 1 }, 0)
+    .to(b, { xPercent: -15, yPercent: -10, opacity: 0.35, duration: 1 }, 1)
+    .to(b, { xPercent: 30, yPercent: -45, opacity: 0.5, duration: 1 }, 2);
 }
 
 function initHero(): void {

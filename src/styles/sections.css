@@ -25,26 +25,29 @@ section {
   border-bottom: 1px solid var(--line);
 }
 
-.hero-glow {
-  position: absolute;
-  z-index: 0;
-  top: -30%;
-  right: -12%;
-  width: min(60vw, 760px);
-  aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.14), transparent 62%);
-  pointer-events: none;
-}
-
 .hero-shot {
   position: relative;
   z-index: 2;
-  padding-bottom: clamp(56px, 9vh, 100px);
+  padding-bottom: clamp(52px, 8vh, 90px);
+}
+
+.hero-shot::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(72vw, 1040px);
+  aspect-ratio: 1.6;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(37, 99, 235, 0.22), transparent 65%);
+  pointer-events: none;
 }
 
 .hero-shot .frame {
+  position: relative;
   max-width: 880px;
   margin-inline: auto;
+  will-change: transform;
 }
 
 .hero-grid {
@@ -55,7 +58,7 @@ section {
   gap: clamp(36px, 6vw, 88px);
   align-items: center;
   padding-top: clamp(120px, 16vh, 170px);
-  padding-bottom: clamp(48px, 7vh, 84px);
+  padding-bottom: clamp(32px, 5vh, 52px);
 }
 
 .hero-copy .display {
@@ -412,24 +415,44 @@ section {
   transform: translateY(18px);
 }
 
-/* ===== Stacked panel transitions =====
-   Each section sticks once fully scrolled and the next panel slides over
-   it while it sinks back. JS sets each panel's sticky `top` and adds the
-   class; without JS (or with reduced motion) the page scrolls normally. */
+/* ===== Ambient glow layer =====
+   Two fixed radial blobs behind everything. CSS gives them their resting
+   (hero) positions so the no-JS page still glows; with motion enabled a
+   scrubbed timeline drifts them between sections. */
 
-.js-stack main > section,
-.js-stack .footer {
-  position: sticky;
-  background: var(--bg);
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.js-stack main > section:not(:first-child),
-.js-stack .footer {
-  border-radius: 26px 26px 0 0;
-  border-top: 1px solid var(--line-strong);
-  box-shadow: 0 -28px 80px rgba(0, 0, 0, 0.55);
+.ambient i {
+  position: absolute;
+  border-radius: 50%;
 }
 
-.js-stack .hero {
-  border-bottom: none;
+.ambient .blob-a {
+  top: -28%;
+  right: -16%;
+  width: min(62vw, 820px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.16), transparent 62%);
+  opacity: 0.9;
+}
+
+.ambient .blob-b {
+  bottom: -34%;
+  left: -18%;
+  width: min(50vw, 660px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.12), transparent 64%);
+  opacity: 0.55;
+}
+
+main,
+.footer {
+  position: relative;
+  z-index: 1;
 }
