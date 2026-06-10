@@ -259,6 +259,59 @@
         </div>
       </section>
 
+      <!-- ============ Share: the headline act ============ -->
+      <section class="section-pad" id="share" aria-label="Sharing clips">
+        <div class="container share-grid">
+          <div class="share-copy" data-reveal>
+            <p class="eyebrow">Sharing</p>
+            <h2 class="h2">From clip to chat in one paste.</h2>
+            <p class="lede">
+              Every clip gets a public link through a Cloudflare Tunnel. Paste it in Discord and
+              it plays inline, tinted with your theme color.
+            </p>
+            <ul class="share-points">
+              <li>No upload queue. The link points straight at your machine.</li>
+              <li>No file size limit to fight, no compression pass.</li>
+              <li>No account, no watermark. It plays inline for the whole channel.</li>
+            </ul>
+          </div>
+
+          <div class="discord" data-reveal id="discord-mock">
+            <div class="discord-msg">
+              <div class="discord-avatar" aria-hidden="true">
+                <svg><use href="#mark" /></svg>
+              </div>
+              <div>
+                <div class="discord-head">
+                  <span class="discord-name">eklon</span>
+                  <span class="discord-time">Today at 11:47 PM</span>
+                </div>
+                <span class="discord-link">https://goal-zero-buffer.trycloudflare.com/clip/12</span>
+                <div class="discord-embed">
+                  <div class="discord-embed-title">Vice_Clip_12_Rocket-League.mp4</div>
+                  <div class="discord-video">
+                    <picture>
+                      <source srcset="./src/assets/shots/embed-thumb.avif" type="image/avif" />
+                      <img
+                        src="./src/assets/shots/embed-thumb.webp"
+                        alt="A Rocket League goal replay embedded in a Discord message"
+                        width="784"
+                        height="336"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                    <div class="discord-play" aria-hidden="true">
+                      <i><svg><use href="#i-play" /></svg></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ============ Features ============ -->
       <section class="section-pad" id="features" aria-label="Features">
         <div class="container">
@@ -285,20 +338,17 @@
             </div>
 
             <div class="bento-card" data-reveal>
-              <h3>Share links that just work</h3>
-              <p>
-                Every clip gets a public Cloudflare Tunnel URL. Paste it in Discord, it plays
-                inline. No upload, no account.
-              </p>
+              <h3>Make it yours</h3>
+              <p>Five accent colors, one electric default. The whole UI follows.</p>
               <div class="bento-media">
                 <div class="shot">
                   <picture>
-                    <source srcset="./src/assets/shots/embed-thumb.avif" type="image/avif" />
+                    <source srcset="./src/assets/shots/settings-accent.avif" type="image/avif" />
                     <img
-                      src="./src/assets/shots/embed-thumb.webp"
-                      alt="A Rocket League clip embedded in Discord"
-                      width="784"
-                      height="336"
+                      src="./src/assets/shots/settings-accent.webp"
+                      alt="The accent color picker in Vice settings"
+                      width="744"
+                      height="152"
                       loading="lazy"
                       decoding="async"
                     />
@@ -506,59 +556,6 @@
             <div class="c-label">Clip management</div>
             <div class="c-obs">None</div>
             <div class="c-vice">Gallery, viewer, trim, highlights, rename</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ Share, up close ============ -->
-      <section class="section-pad" aria-label="Sharing clips">
-        <div class="container share-grid">
-          <div class="share-copy" data-reveal>
-            <p class="eyebrow">Sharing</p>
-            <h2 class="h2">From clip to chat in one paste.</h2>
-            <p class="lede">
-              Every clip gets a public link through a Cloudflare Tunnel. Paste it in Discord and
-              it plays inline, tinted with your theme color.
-            </p>
-            <ul class="share-points">
-              <li>No upload queue. The link points straight at your machine.</li>
-              <li>No account, no watermark, no compression pass.</li>
-              <li>Embeds play inline for everyone in the channel.</li>
-            </ul>
-          </div>
-
-          <div class="discord" data-reveal id="discord-mock">
-            <div class="discord-msg">
-              <div class="discord-avatar" aria-hidden="true">
-                <svg><use href="#mark" /></svg>
-              </div>
-              <div>
-                <div class="discord-head">
-                  <span class="discord-name">eklon</span>
-                  <span class="discord-time">Today at 11:47 PM</span>
-                </div>
-                <span class="discord-link">https://goal-zero-buffer.trycloudflare.com/clip/12</span>
-                <div class="discord-embed">
-                  <div class="discord-embed-title">Vice_Clip_12_Rocket-League.mp4</div>
-                  <div class="discord-video">
-                    <picture>
-                      <source srcset="./src/assets/shots/embed-thumb.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/shots/embed-thumb.webp"
-                        alt="A Rocket League goal replay embedded in a Discord message"
-                        width="784"
-                        height="336"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
-                    <div class="discord-play" aria-hidden="true">
-                      <i><svg><use href="#i-play" /></svg></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
