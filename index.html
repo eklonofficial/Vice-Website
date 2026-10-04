@@ -152,6 +152,26 @@
               <span data-copy-label aria-live="polite">Copy</span>
             </button>
           </div>
+
+          <div class="install-command install-command-other" aria-label="NixOS flake input">
+            <span class="command-label">NixOS flake:</span>
+            <code>inputs.vice.url = &quot;github:eklonofficial/Vice&quot;;</code>
+            <button
+              class="copy-button"
+              type="button"
+              data-copy-button
+              data-command="inputs.vice.url = &quot;github:eklonofficial/Vice&quot;;"
+              aria-label="Copy NixOS flake input"
+            >
+              <span data-copy-label aria-live="polite">Copy</span>
+            </button>
+          </div>
+
+          <p class="install-note">
+            On NixOS, add <code>vice.nixosModules.default</code> to your modules and set
+            <code>services.vice.enable = true</code>.
+            <a href="https://github.com/eklonofficial/Vice#install" target="_blank" rel="noreferrer">Full setup</a>
+          </p>
         </div>
 
         <figure class="hero-product page-width">
@@ -367,7 +387,7 @@
             >
               Get Vice for Linux
             </a>
-            <p>Arch, Ubuntu, Debian, Fedora, openSUSE, Hyprland, Sway, KDE, GNOME, and X11.</p>
+            <p>Arch, Ubuntu, Debian, Fedora, openSUSE, NixOS, Hyprland, Sway, KDE, GNOME, and X11.</p>
           </div>
         </div>
       </section>
