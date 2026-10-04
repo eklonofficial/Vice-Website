@@ -154,7 +154,7 @@
           </div>
 
           <div class="install-command install-command-other" aria-label="NixOS flake input">
-            <span class="command-label">NixOS:</span>
+            <span class="command-label">NixOS flake:</span>
             <code>inputs.vice.url = &quot;github:eklonofficial/Vice&quot;;</code>
             <button
               class="copy-button"
@@ -166,6 +166,12 @@
               <span data-copy-label aria-live="polite">Copy</span>
             </button>
           </div>
+
+          <p class="install-note">
+            On NixOS, add <code>vice.nixosModules.default</code> to your modules and set
+            <code>services.vice.enable = true</code>.
+            <a href="https://github.com/eklonofficial/Vice#install" target="_blank" rel="noreferrer">Full setup</a>
+          </p>
         </div>
 
         <figure class="hero-product page-width">

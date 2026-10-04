@@ -473,6 +473,26 @@ figure {
   white-space: normal;
 }
 
+.install-note {
+  width: min(100%, 760px);
+  margin-top: 12px;
+  padding-inline: 16px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+}
+
+.install-note code {
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--md-ref-typeface-plain);
+  font-weight: 600;
+}
+
+.install-note a {
+  color: var(--md-sys-color-primary);
+  font-weight: 650;
+}
+
 .copy-button {
   min-width: 72px;
   min-height: 48px;
